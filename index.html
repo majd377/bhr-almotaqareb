@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>إيقاع المتقارب | لعبة العَروض</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@500;700;800&family=Lalezar&display=swap">
+<style>
+:root{--s1:#e4f7f5;--s2:#8acbc6;--p1:#fffdf6;--p2:#e4f4f0;--ink:#123c45;--ink2:#2d6d70;--ln:#167c80;--y1:#ffd0b8;--y2:#ff896d;--ok:#25856b;--bad:#c74754;--bi:#153e46;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--s1:#12313b;--s2:#071c25;--p1:#19424a;--p2:#12353d;--ink:#effffb;--ink2:#9ed8d2;--ln:#ff967a;--y1:#ffb49b;--y2:#e76f62;color-scheme:dark}}
+:root[data-theme="dark"]{--s1:#12313b;--s2:#071c25;--p1:#19424a;--p2:#12353d;--ink:#effffb;--ink2:#9ed8d2;--ln:#ff967a;--y1:#ffb49b;--y2:#e76f62;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:'Cairo',Tahoma,sans-serif;color:var(--ink);line-height:1.8;background:radial-gradient(circle,rgba(22,124,128,.18) 1.5px,transparent 2px) 0 0/26px 26px,linear-gradient(135deg,var(--s1),var(--s2)) fixed;background-color:var(--s2)}
+button{font:inherit;cursor:pointer;color:inherit}
+.wrap{width:min(760px,calc(100% - 24px));margin:0 auto;padding:14px 0 50px}
+.panel{background:linear-gradient(var(--p1),var(--p2));border:3px solid var(--ln);border-bottom-width:7px;border-radius:22px;padding:16px}
+.btn{font-family:'Lalezar','Cairo',sans-serif;font-size:1.2rem;color:var(--bi);padding:8px 24px;border:3px solid var(--ln);border-bottom-width:7px;border-radius:16px;background:linear-gradient(var(--y1),var(--y2));box-shadow:inset 0 3px 0 rgba(255,255,255,.6);transition:.1s}
+.btn:active{transform:translateY(3px);border-bottom-width:4px}.btn.alt{background:linear-gradient(var(--p1),var(--p2));color:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.hud{display:flex;align-items:center;gap:10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding:8px 12px;margin-bottom:14px}
+.av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:26px;border:3px solid var(--ln);background:radial-gradient(circle at 35% 30%,#fff3b0,var(--y2))}
+.hm{flex:1;min-width:0;font-family:'Lalezar',sans-serif;line-height:1.3}
+.track{height:12px;border-radius:9px;background:rgba(211,155,28,.28);border:2px solid var(--ln);overflow:hidden}.track i{display:block;height:100%;background:linear-gradient(var(--y1),var(--y2));transition:width .4s}
+.chip{font-weight:800;border:3px solid var(--ln);border-radius:12px;padding:0 9px;background:var(--p1);white-space:nowrap}
+.hero{text-align:center;padding:6px 0 4px}
+.crown{font-size:58px;display:inline-block;animation:fl 3s ease-in-out infinite}
+.logo{font:400 clamp(2.6rem,10vw,4.2rem)/1.2 'Lalezar',sans-serif;margin:0;color:#fff0d9;-webkit-text-stroke:2px #167c80;paint-order:stroke fill;text-shadow:0 5px 0 #167c80,0 9px 16px rgba(22,124,128,.35)}
+.sub{margin:6px 0 0;color:var(--ink2);font-weight:700}
+.map{list-style:none;margin:20px 0 0;padding:0;position:relative;display:grid;gap:22px;justify-items:center}
+.map:before{content:"";position:absolute;top:30px;bottom:30px;left:calc(50% - 4px);border-left:8px dotted rgba(211,155,28,.55)}
+.node{display:grid;justify-items:center;position:relative;transform:translateX(var(--x))}
+.nb{width:90px;height:90px;border-radius:50%;font-size:40px;display:grid;place-items:center;border:4px solid var(--ln);border-bottom-width:9px;background:radial-gradient(circle at 35% 30%,#fff7c2,var(--y2));box-shadow:inset 0 5px 0 rgba(255,255,255,.55)}
+.node.lock .nb{background:#e9e0bd;filter:grayscale(.8);cursor:not-allowed}.node.cur .nb{animation:pulse 1.5s infinite}
+.nl{font:400 1.1rem 'Lalezar',sans-serif;margin-top:6px;padding:0 12px;border:3px solid var(--ln);border-radius:12px;background:var(--p1)}.st{letter-spacing:2px;font-size:.95rem}
+.owl{display:flex;gap:12px;align-items:flex-start}.owl .e{font-size:62px;animation:fl 3s ease-in-out infinite}.bubble{flex:1}
+h2{font:400 1.7rem 'Lalezar',sans-serif;margin:0 0 8px}h3{font:400 1.25rem 'Lalezar',sans-serif;margin:16px 0 6px}p{margin:6px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:12px 0}
+.card{background:var(--p1);border:3px solid var(--ln);border-radius:16px;padding:10px 12px}.card b{display:block}
+.ex{text-align:center;margin:12px 0;padding:10px;border:3px dashed var(--ln);border-radius:16px}.ex .s{font:700 1.6rem 'Amiri',serif}
+mark{background:linear-gradient(var(--y1),var(--y2));color:var(--bi);border-radius:8px;padding:0 8px}
+.tip{border-right:6px solid var(--y2);background:rgba(246,184,46,.18);border-radius:12px;padding:8px 14px;margin:12px 0}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.92rem;margin:8px 0}th,td{border:2px solid var(--ln);padding:6px 10px;text-align:right}th{background:linear-gradient(var(--y1),var(--y2));color:var(--bi)}
+.qtop{display:flex;align-items:center;gap:10px;margin-bottom:14px}.qtop .track{flex:1}.x{border:3px solid var(--ln);border-radius:12px;background:var(--p1);width:38px;height:38px}
+.hearts{letter-spacing:2px;font-size:1.2rem}.mon{font-size:64px;text-align:center;animation:fl 2.4s ease-in-out infinite}.qbox h2{font-size:1.4rem;text-align:center;font-family:'Cairo',sans-serif;font-weight:800}
+.opts{display:grid;gap:10px;margin-top:12px}.opt{text-align:right;font-weight:700;padding:10px 14px;border:3px solid var(--ln);border-bottom-width:6px;border-radius:14px;background:var(--p1)}
+.opt:not(:disabled):hover{background:var(--y1);color:var(--bi)}.opt.good{background:var(--ok);color:#fff}.opt.bad{background:var(--bad);color:#fff;animation:sh .35s}
+.fb{margin-top:14px;animation:up .25s}.fb.g{border-color:var(--ok)}.fb.b{border-color:var(--bad)}.fb .btn{margin-top:6px}
+.res{text-align:center}.big{font-size:70px;animation:fl 2s ease-in-out infinite}.stars{font-size:2.4rem;letter-spacing:6px}
+.foot{text-align:center;color:var(--ink2);font-size:.85rem;margin-top:18px}.foot b{color:var(--ink)}
+body:before,body:after{position:fixed;font-size:30px;opacity:.6;pointer-events:none;animation:fl 4s ease-in-out infinite}body:before{content:"〰️";top:16%;left:5%}body:after{content:"🐚";bottom:12%;right:5%;animation-delay:1s}@keyframes fl{50%{transform:translateY(-8px)}}@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(246,184,46,.45)}}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}@keyframes up{from{opacity:0;transform:translateY(10px)}}
+@media(max-width:460px){.node{transform:translateX(calc(var(--x)*.5))}.owl .e{font-size:44px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap"><div id="hud"></div><div id="app"></div></div>
+<script>
+const L=[
+{n:'مدخل إلى بحر المتقارب',i:'🌊',m:'🦀',say:'أهلًا بك في رحلة الإيقاع! سنكتشف بحر المتقارب ونستمع إلى نبضه الشعري خطوةً خطوة.',
+learn:`<h3>🎼 ما علم العَروض؟</h3><p>علم العَروض يساعدنا على معرفة أوزان الشعر، وذلك بتقطيع البيت إلى مقاطع صوتية ومقارنتها بالتفعيلات.</p><div class="ex"><div class="s">فعولن فعولن فعولن فعولن</div><b>هذا هو الوزن الأصلي لبحر المتقارب التام.</b></div><div class="cards"><div class="card"><b>🌊 اسم البحر</b>بحر المتقارب.</div><div class="card"><b>🥁 تفعيلته الأساسية</b>فعولن.</div><div class="card"><b>🔁 صورته الأصلية</b>تتكرر «فعولن» أربع مرات في كل شطر.</div></div><div class="tip"><b>تذكّر:</b> لا نعتمد على شكل الكلمة المكتوب فقط، بل على نطقها عند التقطيع العروضي.</div>`,
+q:[['ما البحر الذي ندرسه في هذه الرحلة؟',['البسيط','المتقارب','الكامل'],1,'موضوع الرحلة هو بحر المتقارب.'],
+['ما التفعيلة الأساسية لبحر المتقارب؟',['مستفعلن','فاعلاتن','فعولن'],2,'يقوم وزن بحر المتقارب على تفعيلة «فعولن».'],
+['كم مرة تتكرر «فعولن» في صورة الشطر الأصلية هنا؟',['مرتان','ثلاث مرات','أربع مرات'],2,'الصورة الأصلية المعروضة لبحر المتقارب التام: فعولن فعولن فعولن فعولن.']]},
+{n:'وزن بحر المتقارب',i:'🥁',m:'🐚',say:'أحسنت الوصول! الآن ثبّت إيقاع البحر في أذنك قبل أن تبدأ التقطيع.',
+learn:`<h3>🔁 احفظ النمط الإيقاعي</h3><div class="ex"><div class="s">فعولن │ فعولن │ فعولن │ فعولن</div>أربع تفعيلات في الشطر وفق الوزن الأصلي لبحر المتقارب التام.</div><p>يتكوّن البيت الشعري من شطرين: صدر وعجز. وعند التقطيع نفحص كل شطر على حدة ونكتب تفعيلاته بحسب النطق والوزن.</p><div class="cards"><div class="card"><b>الشطر الأول</b>يُسمّى الصدر.</div><div class="card"><b>الشطر الثاني</b>يُسمّى العجز.</div></div><div class="tip">رتّب التفعيلات من بداية الشطر إلى نهايته، ولا تخلط بين تفعيلات الصدر والعجز.</div>`,
+q:[['أيّ ترتيب يوافق الوزن الأصلي المعروض؟',['فعولن فعولن فعولن فعولن','مستفعلن مستفعلن فاعلن','فاعلاتن فعولن فاعلاتن'],0,'الوزن الأصلي لبحر المتقارب التام في هذا الدرس هو تكرار فعولن أربع مرات.'],
+['ما اسم الشطر الأول من البيت؟',['العجز','الصدر','القافية'],1,'الشطر الأول هو الصدر، والثاني هو العجز.'],
+['عند تقطيع بيت شعري، ما الذي نفحصه أساسًا؟',['عدد الكلمات المكتوبة فقط','النطق والمقاطع الصوتية والوزن','علامات الترقيم'],1,'التقطيع العروضي يعتمد على المنطوق وموافقته للتفعيلات.']]},
+{n:'التقطيع العروضي',i:'✂️',m:'🦑',say:'حان وقت التفكيك! قسّم الكلام بحسب ما يُنطق، ثم قارنه بالتفعيلات.',
+learn:`<h3>✂️ كيف نُقطّع؟</h3><p>التقطيع العروضي هو كتابة الكلمات بحسب نطقها ثم تقسيمها إلى وحدات صوتية ومقابلتها بالتفعيلات. قد يختلف الرسم الإملائي عن الصورة التي نكتبها عند التقطيع.</p><div class="ex"><div class="s">فعولن │ فعولن │ فعولن │ فعولن</div>ابدأ بتحديد حدود التفعيلات، ثم راجع النطق حتى لا تضيف صوتًا أو تهمله.</div><div class="cards"><div class="card"><b>1. اقرأ</b>اقرأ البيت قراءة سليمة.</div><div class="card"><b>2. اكتب المنطوق</b>انتبه إلى الحروف التي تُنطق أو لا تُنطق.</div><div class="card"><b>3. قسّم</b>طابق المقاطع مع التفعيلات.</div><div class="card"><b>4. راجع</b>تحقّق من انتظام الوزن.</div></div><div class="tip">لا تحكم على البحر من عدد الكلمات؛ فقد تكون كلمة طويلة وأخرى قصيرة، لكن العبرة بالإيقاع الصوتي.</div>`,
+q:[['ما المقصود بالتقطيع العروضي؟',['عدّ الكلمات في البيت','تقسيم المنطوق إلى مقاطع ومقابلتها بالتفعيلات','تحديد موضوع القصيدة'],1,'التقطيع يدرس المقاطع الصوتية ومدى توافقها مع الوزن.'],
+['ما أول خطوة مفيدة قبل تقطيع البيت؟',['قراءة البيت قراءة سليمة','حذف القافية','عدّ علامات الترقيم'],0,'ابدأ بقراءة البيت كما يُنطق، ثم اكتب المنطوق وقسّمه.'],
+['لماذا لا يكفي عدّ الكلمات لمعرفة الوزن؟',['لأن الكلمات كلها متساوية','لأن الوزن يعتمد على الإيقاع والمقاطع الصوتية','لأن البيت لا يتكوّن من كلمات'],1,'الوزن يرتبط بالمقاطع المنطوقة والتفعيلات، لا بعدد الكلمات.']]},
+{n:'القبض في فعولن',i:'🌀',m:'🦀',say:'ظهر أول تغيير إيقاعي! تعرّف إلى زحاف القبض، وراقب ما يحدث للتفعيلة.',
+learn:`<h3>🌀 زحاف القبض</h3><p>القبض زحاف يكون بحذف الخامس الساكن من التفعيلة.</p><div class="ex"><div class="s">فعولن ← فعولُ</div>تتحول «فعولن» إلى «فعولُ» عند دخول القبض عليها.</div><div class="cards"><div class="card"><b>قبل القبض</b><div class="s">فعولن</div></div><div class="card"><b>بعد القبض</b><div class="s">فعولُ</div></div></div><div class="tip"><b>علامة التذكّر:</b> احذف النون الأخيرة من «فعولن» في الصورة الموضّحة، فتكون «فعولُ».</div><p>قد ترد التفعيلة مقبوضة في مواضع من بحر المتقارب؛ لذلك انتبه إلى اختلاف الصورة مع بقاء الإيقاع ضمن قواعد البحر.</p>`,
+q:[['ما اسم الزحاف الذي يحذف الخامس الساكن؟',['القبض','الكف','الطي'],0,'القبض هو حذف الخامس الساكن من التفعيلة.'],
+['إلى ماذا تتحول «فعولن» عند القبض؟',['فاعلن','فعولُ','مفاعيلن'],1,'الصورة الناتجة في هذا الدرس هي «فعولُ».'],
+['ما الجزء المحذوف من «فعولن» عند دخول القبض؟',['الحرف الأول','الحرف الثالث المتحرك','الخامس الساكن، وهو النون الأخيرة'],2,'القبض حذف الخامس الساكن من التفعيلة.']]},
+{n:'تمييز الصور',i:'🔎',m:'🐙',say:'ليس كل اختلاف خطأً في الوزن؛ عليك أن تميّز بين التفعيلة الأصلية وصورتها بعد القبض.',
+learn:`<h3>🔎 قارِن بين الصورتين</h3><div class="tw"><table><tr><th>الصورة</th><th>التفعيلة</th><th>الحالة</th></tr><tr><td>الأصل</td><td>فعولن</td><td>من دون قبض</td></tr><tr><td>بعد القبض</td><td>فعولُ</td><td>دخلها زحاف القبض</td></tr></table></div><p>عند تحليل البيت، لا تخلط بين تغيير جائز في التفعيلة وبين خطأ في التقطيع. حدّد التفعيلة أولًا، ثم افحص إن كانت الصورة ناتجة عن القبض.</p><div class="tip">تذكّر أن «فعولُ» هنا صورة «فعولن» بعد القبض، وليست تفعيلة مختلفة تحفظها بلا سبب.</div>`,
+q:[['أيّهما صورة التفعيلة الأصلية؟',['فعولُ','فعولن','مستفعلن'],1,'«فعولن» هي الصورة الأصلية المعروضة.'],
+['أيّ صورة تدل على دخول القبض؟',['فعولُ','فعولن فقط','فاعلاتن'],0,'«فعولُ» هي الصورة الناتجة عن القبض في هذا الدرس.'],
+['إذا وجدت «فعولُ» في موضع مناسب من المتقارب، فما التفسير المحتمل؟',['أن الوزن مستحيل دائمًا','أن التفعيلة دخلها القبض','أنها قافية بالضرورة'],1,'قد تكون «فعولُ» ناتجة عن زحاف القبض.']]},
+{n:'تدريب المحلّل العروضي',i:'🧭',m:'🦈',say:'جمّع ما تعلّمته: اسم البحر، تفعيلته، طريقة التقطيع، وزحاف القبض.',
+learn:`<h3>🧭 خطوات تحليل سريعة</h3><p>عند سؤالك عن بحر المتقارب، اتبع هذا المسار:</p><div class="cards"><div class="card"><b>١ — حدّد البحر</b>بحر المتقارب.</div><div class="card"><b>٢ — اذكر الأصل</b>فعولن فعولن فعولن فعولن في الشطر وفق الصورة الأصلية.</div><div class="card"><b>٣ — افحص التفعيلات</b>انتبه إلى صورة «فعولُ» عند القبض.</div><div class="card"><b>٤ — علّل</b>القبض حذف الخامس الساكن.</div></div><div class="tip">في التقطيع الفعلي لأي بيت، ارجع إلى نطق البيت كاملًا ولا تستنتج الوزن من تفعيلة منفردة فقط.</div>`,
+q:[['ما ترتيب الخطوات الأنسب لتحليل الوزن؟',['تحديد البحر ثم فحص التفعيلات وتعليل التغيير','عدّ الكلمات ثم اختيار البحر عشوائيًا','تحديد القافية فقط'],0,'ابدأ بالوزن، ثم طابق التفعيلات، ثم فسّر التغييرات.'],
+['ما تعريف القبض؟',['زيادة حرف في آخر التفعيلة','حذف الخامس الساكن','تكرار القافية'],1,'القبض هو حذف الخامس الساكن.'],
+['أيّ عبارة صحيحة عن تقطيع البيت؟',['يعتمد على الرسم وحده','لا يحتاج إلى قراءة البيت','يراعي النطق والمقاطع الصوتية والتفعيلات'],2,'النطق والمقاطع أساس التقطيع العروضي.']]},
+{n:'التحدّي النهائي',i:'👑',m:'🐉',say:'وصلت إلى الاختبار الأخير! أثبت أنك أتقنت إيقاع بحر المتقارب.',
+learn:`<div class="tip"><b>مراجعة ما قبل التحدّي</b><br>• اسم البحر: المتقارب.<br>• التفعيلة الأساسية: فعولن.<br>• الصورة الأصلية المعروضة: فعولن فعولن فعولن فعولن.<br>• القبض: حذف الخامس الساكن.<br>• بعد القبض: فعولُ.<br>• التقطيع يعتمد على النطق والمقاطع الصوتية.</div>`,
+q:[['ما التفعيلة الأساسية لبحر المتقارب؟',['فعولن','مستفعلن','فاعلاتن'],0,'التفعيلة الأساسية في بحر المتقارب هي فعولن.'],
+['ما صورة «فعولن» بعد القبض؟',['فعولُ','مفاعلتن','فاعلن'],0,'تتحول فعولن إلى فعولُ عند حذف الخامس الساكن.'],
+['ما الذي يحذفه زحاف القبض؟',['الأول المتحرك','الثاني الساكن','الخامس الساكن'],2,'تعريف القبض هو حذف الخامس الساكن.'],
+['ما اسم الشطر الثاني من البيت؟',['الصدر','العجز','التفعيلة'],1,'الشطر الأول صدر، والشطر الثاني عجز.'],
+['أيّ نمط يمثّل الوزن الأصلي المعروض؟',['فعولن فعولن فعولن فعولن','فاعلاتن فاعلاتن','مستفعلن فاعلن'],0,'هذا هو نمط بحر المتقارب التام في صورته الأصلية المعروضة.'],
+['ما الخطوة الأهم قبل مطابقة التفعيلات؟',['قراءة البيت بحسب نطقه','حذف الكلمات الطويلة','تغيير القافية'],0,'تبدأ عملية التقطيع بقراءة سليمة والانتباه إلى المنطوق.'],
+['«فعولُ» في هذا الدرس تمثّل:',['تفعيلة بعد القبض','اسم بحر آخر','نوعًا من القافية'],0,'فعولُ صورة فعولن بعد دخول زحاف القبض.']]}
+];
+const X=[30,-40,-70,-10,60,70,0],RK=['كاتب مبتدئ','فارس الكلمات','وزير البيان','أمير البيان','ملك البيان'],RE=['📝','🛡️','📜','🏰','👑'];
+let S={st:Array(7).fill(0),xp:0},P,rs=0;
+try{const r=JSON.parse(localStorage.getItem('mb_mutaqarib1')||'null');if(r&&r.st&&r.st.length===7)S=r}catch(e){}
+const save=()=>{try{localStorage.setItem('mb_mutaqarib1',JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s),app=$('#app'),done=()=>S.st.filter(x=>x>0).length;
+const stars=n=>'⭐'.repeat(n)+'☆'.repeat(3-n);
+function hud(){const d=done(),r=d>=7?4:d>=6?3:d>=4?2:d>=2?1:0;$('#hud').innerHTML=`<div class="hud panel"><div class="av">${RE[r]}</div><div class="hm">${RK[r]}<div class="track"><i style="width:${d/7*100}%"></i></div></div><div class="chip">⭐ ${S.st.reduce((a,b)=>a+b,0)}</div><div class="chip">✨ ${S.xp}</div></div>`}
+function go(f){hud();f();window.scrollTo({top:0})}
+function map(){go(()=>{const cur=S.st.findIndex(x=>!x);
+app.innerHTML=`<div class="hero"><div class="crown">🏰</div><h1 class="logo">إيقاع المتقارب</h1><p class="sub">رحلة في علم العَروض · أتقن الوزن واجمع النجوم</p></div>
+<ol class="map">${L.map((l,i)=>{const lock=i>0&&!S.st[i-1];return`<li class="node ${lock?'lock':''} ${i===cur&&!lock?'cur':''}" style="--x:${X[i]}px"><button class="nb" data-i="${i}" aria-label="${l.n}">${lock?'🔒':l.i}</button><div class="nl">${i+1}. ${l.n}</div><div class="st">${S.st[i]?stars(S.st[i]):''}</div></li>`}).join('')}</ol>
+<div class="panel foot"><div><b>إعداد الطالب:</b> مجد خالد وليد اشبير</div><div><b>الصف:</b> حادي عشر علمي 1</div><div><b>بإشراف:</b> أ. حسن شلش</div><div class="row"><button class="btn alt" id="rs">↻ إعادة الرحلة</button></div></div>`;
+app.querySelectorAll('.nb').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i>0&&!S.st[i-1])return;lesson(i)});
+$('#rs').onclick=e=>{if(!rs){rs=1;e.target.textContent='اضغط مرة أخرى للتأكيد';return}rs=0;S={st:Array(7).fill(0),xp:0};save();map()}})}
+function lesson(i){go(()=>{const l=L[i];app.innerHTML=`<div class="panel"><div class="row" style="justify-content:space-between;margin:0 0 8px"><button class="btn alt" id="bk" style="font-size:1rem;padding:2px 14px">→ الخريطة</button><span class="chip">المرحلة ${i+1}</span></div><h2>${l.i} ${l.n}</h2><div class="owl"><div class="e">🦉</div><div class="panel bubble">${l.say}</div></div>${l.learn}<div class="row"><button class="btn" id="st">⚔️ ابدأ التحدّي</button></div></div>`;
+$('#bk').onclick=map;$('#st').onclick=()=>play(i)})}
+function play(i){P={i,k:0,h:3};ask()}
+function ask(){go(()=>{const l=L[P.i],[q,o,a,w]=l.q[P.k];P.o=o.map((t,j)=>[t,j===a]).sort(()=>Math.random()-.5);P.w=w;P.lock=0;
+app.innerHTML=`<div class="qtop"><button class="x" id="ex" aria-label="خروج">✕</button><div class="track"><i style="width:${P.k/l.q.length*100}%"></i></div><div class="hearts">${'❤️'.repeat(P.h)+'🤍'.repeat(3-P.h)}</div></div><div class="panel qbox"><div class="mon">${l.m}</div><h2>${q}</h2><div class="opts">${P.o.map((x,j)=>`<button class="opt" data-j="${j}">${x[0]}</button>`).join('')}</div></div><div id="fb"></div>`;
+$('#ex').onclick=map;app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b))})}
+function pick(b){if(P.lock)return;P.lock=1;const ok=P.o[+b.dataset.j][1],l=L[P.i];
+app.querySelectorAll('.opt').forEach((x,k)=>{x.disabled=true;if(P.o[k][1])x.classList.add('good')});
+if(!ok){b.classList.add('bad');P.h--}
+$('.hearts').textContent='❤️'.repeat(P.h)+'🤍'.repeat(3-P.h);
+const dead=P.h<=0,last=P.k===l.q.length-1;
+$('#fb').innerHTML=`<div class="fb panel ${ok?'g':'b'}"><b>${ok?'أحسنت! ✨':'ليست الإجابة الصحيحة 💥'}</b><p>${P.w}</p><div class="row" style="margin:0"><button class="btn" id="nx">${dead||last?'النتيجة':'تابع ←'}</button></div></div>`;
+$('#nx').onclick=()=>dead?lose():last?win():(P.k++,ask());$('#nx').scrollIntoView({block:'nearest',behavior:'smooth'})}
+function win(){const i=P.i,n=P.h,first=!S.st[i];S.st[i]=Math.max(S.st[i],n);if(first)S.xp+=50+n*10;save();
+go(()=>{app.innerHTML=`<div class="panel res"><div class="big">${i===6?'👑':'🏆'}</div><h2>${i===6?'أنت ملك البيان!':'أحسنت! أنهيتَ المرحلة'}</h2><div class="stars">${stars(n)}</div><p>${first?`حصلتَ على <b>${50+n*10}</b> نقطة خبرة ✨`:'تم حفظ أفضل نتيجة لك.'}</p><div class="row"><button class="btn alt" id="rp">↻ أعد المرحلة</button>${i<6?'<button class="btn" id="nm">المرحلة التالية ←</button>':''}<button class="btn alt" id="mp">🗺️ الخريطة</button></div></div>`;
+$('#rp').onclick=()=>play(i);$('#mp').onclick=map;if(i<6)$('#nm').onclick=()=>lesson(i+1)})}
+function lose(){const i=P.i;go(()=>{app.innerHTML=`<div class="panel res"><div class="big">💔</div><h2>نفدت القلوب!</h2><p>لا بأس أيها الفارس، راجع الدرس ثم عُد أقوى.</p><div class="row"><button class="btn" id="rp">↻ حاول مجددًا</button><button class="btn alt" id="rv">📖 راجع الدرس</button></div></div>`;$('#rp').onclick=()=>play(i);$('#rv').onclick=()=>lesson(i)})}
+map();
+</script>
+</body>
+</html>
